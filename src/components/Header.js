@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { auth } from "./utils/firebase";
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-const Header = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged } from 'firebase/auth';
 
+import { addUser, removeUser } from "./utils/userSlice";
+import { logo } from './utils/constants';
+
+const Header = () => {
+    let dispatch = useDispatch()
+    let user = useSelector((state) => state.user)
     let navigate = useNavigate()
     const handleSigOut = () => {
         signOut(auth).then(() => {
@@ -13,14 +20,32 @@ const Header = () => {
             navigate("/error")
         })
     }
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                const { uid, email, displayName } = user;
+                dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+                navigate('/browser')
+            } else {
+                // User is signed out
+
+                dispatch(removeUser());
+                navigate('/')
+            }
+        });
+        // unsubscribe when component unmounts
+        return () => unsubscribe();
+    }, []);
 
     return (
         <div className='w-full flex justify-between mx-2 py-2 z-20  absolute  bg-gradient-to-b from-black'>
-            <img src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png" className='w-36' />
-            <div>
+            <img src={logo} className='w-36' />
+            <div className='m-4'>
+                {user &&
+                    <button onClick={handleSigOut} className='p-4 text-white rounded-lg bg-red-700'>signOut</button>}
 
-
-                <button onClick={handleSigOut} className='p-4 text-white rounded-lg bg-red-700'>Sign Out</button>
             </div>
         </div>
     )
