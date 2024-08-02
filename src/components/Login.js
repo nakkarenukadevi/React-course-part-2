@@ -3,9 +3,10 @@ import Header from './Header';
 import checkValidaeData from './utils/Validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from './utils/firebase';
-
 import { useDispatch } from 'react-redux';
 import { addUser } from './utils/userSlice';
+import { BG_URL } from './utils/constants';
+
 const Login = () => {
 
     let dispatch = useDispatch();
@@ -67,21 +68,14 @@ const Login = () => {
                     setErrorMassage(errorCode + "-" + errorMessage)
 
                 });
-
-
         }
-
-
-
-
-
 
     }
     return (
         <div>
             <Header />
             <div className='absolute'>
-                <img src="https://assets.nflxext.com/ffe/siteui/vlv3/655a9668-b002-4262-8afb-cf71e45d1956/5ff265b6-3037-44b2-b071-e81750b21783/IN-en-20240715-POP_SIGNUP_TWO_WEEKS-perspective_WEB_c6d6616f-4478-4ac2-bdac-f54b444771dd_medium.jpg" />
+                <img src={BG_URL} />
             </div>
             <from onSubmit={(e) => { e.preventdefault() }} className='w-3/12 p-3 absolute top-0  right-0 left-0 bg-black bg-opacity-50 my-36 mx-auto h-58 text-white text-xl'>
                 <h1 className='font-bold text-3xl py-4'>{togglesign ? "sign in" : "Sign up"}</h1>
