@@ -92,7 +92,7 @@ const Login = () => {
                 <button onClick={handleButtonClick} className='p-2 my-3  rounded-lg bg-red-600 w-11/12 text-white font-sans text-xl font-bold' >
                     {togglesign ? "sign in" : "Sign up"}
                 </button>
-                <p className='cursor-pointer' onClick={handletoogleSignform}><span>{togglesign ? " New to Netfilx? sign up Now" : "All redy Resigted ? Sign in Now"}</span></p>
+                <p className='cursor-pointer' onClick={handletoogleSignform}><span>{togglesign ? " New to Netfilx? sign up Now" : "Already Resigted ? Sign in Now"}</span></p>
             </from>
 
         </div>
