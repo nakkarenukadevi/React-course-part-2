@@ -1,26 +1,41 @@
 import React from 'react'
 import MovieCard from './MovieCard';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { useRef } from 'react';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/scrollbar';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
-import { Navigation, Pagination, Scrollbar, A11y, Keyboard } from 'swiper/modules';
 const MoviesList = ({ title, movies }) => {
+    let imageContainerRef = useRef();
+
+    const handlebutton = (direction) => {
+        if (direction === "prev") {
+            imageContainerRef.current.scrollLeft -= 300;
+        } else {
+            imageContainerRef.current.scrollLeft += 300;
+        }
+
+
+    }
+
+
     return (
         <div className='px-6 text-white'>
             <h1 className='text-bold   text-4xl'>{title}</h1>
-            <div className=''>
+            <div className='flex justify-between items-center'>
+                <div className='left-icon'>
+                    <FontAwesomeIcon icon={faArrowLeft} onClick={() => handlebutton("prev")} className="text-2xl rounded-full text-black bg-white p-3" />
+                </div>
+                <div className='flex  overflow-hidden w-3/4  mx-auto ' ref={imageContainerRef}>
 
-                <div className='flex flex-wrap '>
                     {movies?.map((movie => {
                         return <MovieCard key={movie.id} posterPath={movie?.poster_path} />
                     }))}
 
 
+                </div>
+                <div className='right-icon '>
+                    <FontAwesomeIcon icon={faArrowRight} className="text-black text-2xl bg-white p-3 rounded-full" onClick={() => handlebutton("next")} />
 
                 </div>
             </div>

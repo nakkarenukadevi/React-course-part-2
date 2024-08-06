@@ -55,19 +55,19 @@ const Header = () => {
             <img src={logo} className='w-36' />
             <div className=' '>
 
-                <div className='flex'>
+                <div className='flex justify-between items-center'>
 
                     {user && <>
-                        {showGptSearch && <select className='p-2 m-2 bg-gray-900 text-white' onClick={(e) => handleLanguageChange(e)}>
+                        {showGptSearch && <select className='p-4 m-2 bg-gray-900 text-white rounded-lg' onClick={(e) => handleLanguageChange(e)}>
                             {SUPPORTED_LANGUAGES.map((lang) => {
-                                return <option value={lang.identifier} key={lang.identifier}>{lang.name}</option>
+                                return <option value={lang.identifier} key={lang.identifier} className='w-30 font-mono font-bold '>{lang.name}</option>
                             })}
 
                         </select>}
 
                         <div>
-                            <button className='bg-violet-700 text-white rounded-lg px-7  py-3 m-2' onClick={handleGptSearchClick}>{showGptSearch ? "Home page" : "Gpt Search"}</button></div>
-                        <button onClick={handleSigOut} className='px-7 py-3 m-2 text-white rounded-lg bg-red-700'>sign Out</button>
+                            <button className='bg-violet-700 text-white rounded-lg px-7  py-3 mx-4' onClick={handleGptSearchClick}>{showGptSearch ? "Home page" : "Gpt Search"}</button></div>
+                        <button onClick={handleSigOut} className='px-7 py-3  mr-16 text-white rounded-lg bg-red-700 '>sign Out</button>
                     </>
 
                     }
